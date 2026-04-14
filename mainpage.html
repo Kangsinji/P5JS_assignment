@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Film-Grab Clone</title>
+    <link rel="stylesheet" href="mainpage.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">[FILMGRAB]</div>
+        <div class="menu-icons">
+            <div class="hamburger"><span></span><span></span><span></span></div>
+            <div class="search-icon">🔍</div>
+        </div>
+    </header>
+
+    <main class="gallery-container">
+        <div class="grid-item" data-stills="image/image1.jpg,image/still1-1.jpg,image/still1-2.jpg,image/still1-3.jpg">
+            <img src="image/image1.jpg">
+            <div class="title-overlay">
+                <span class="movie-title">Leon</span>
+            </div>
+        </div>
+        <div class="grid-item" data-stills="image/image2.jpg,image/still2-1.jpg,image/still2-2.jpg,image/still2-3.jpg,image/still2-4.jpg">
+            <img src="image/image2.jpg">
+            <div class="title-overlay">
+                <span class="movie-title">Titanic</span>
+            </div>
+        </div>
+        <div class="grid-item" data-stills="image/image3.jpg,image/still3-1.jpg,image/still3-2.jpg,image/still3-3.jpg,image/still3-4.jpg">
+            <img src="image/image3.jpg">
+            <div class="title-overlay">
+                <span class="movie-title">500 days of summer</span>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img src="image4.jpg">
+            <div class="title-overlay">
+                <span class="movie-title">Movie Name4</span>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img src="image5.jpg">
+            <div class="title-overlay">
+                <span class="movie-title">Movie Name5</span>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img src="image6.jpg">
+            <div class="title-overlay">
+                <span class="movie-title">Movie Name6</span>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img src="image7.jpg">
+            <div class="title-overlay">
+                <span class="movie-title">Movie Name7</span>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img src="image8.jpg">
+            <div class="title-overlay">
+                <span class="movie-title">Movie Name8</span>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img src="image9.jpg">
+            <div class="title-overlay">
+                <span class="movie-title">Movie Name9</span>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img src="image10.jpg">
+            <div class="title-overlay">
+                <span class="movie-title">Movie Name10</span>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img src="image11.jpg">
+            <div class="title-overlay">
+                <span class="movie-title">Movie Name11</span>
+            </div>
+        </div>
+        <div class="grid-item">
+            <img src="image12.jpg">
+            <div class="title-overlay">
+                <span class="movie-title">Movie Name12</span>
+            </div>
+        </div>
+    </main>
+    <script>
+        document.querySelectorAll('.grid-item').forEach(item => {
+            let timer;
+            let slideInterval;
+            const mainImg = item.querySelector('img');
+            const stills = item.getAttribute('data-stills').split(',');
+            let currentIndex = 0;
+        
+            item.addEventListener('mouseenter', () => {
+                // 1. 2초 뒤 실행될 타이머 설정
+                timer = setTimeout(() => {
+                    item.classList.add('expanded'); // 크게 확대
+                    
+                    // 2. 슬라이드 쇼 시작 (1.5초 간격)
+                    slideInterval = setInterval(() => {
+                        currentIndex = (currentIndex + 1) % stills.length;
+                        mainImg.style.opacity = 0.5; // 교체 효과
+                        
+                        setTimeout(() => {
+                            mainImg.src = stills[currentIndex];
+                            mainImg.style.opacity = 1;
+                        }, 250);
+                    }, 1500);
+                }, 2000); // 2초 대기
+            });
+        
+            item.addEventListener('mouseleave', () => {
+                // 마우스 나가면 모든 상태 초기화
+                clearTimeout(timer);
+                clearInterval(slideInterval);
+                
+                item.classList.remove('expanded');
+                mainImg.src = stills[0]; // 원래 이미지로 복구
+                currentIndex = 0;
+            });
+        });
+        </script>
+</body>
+</html>
